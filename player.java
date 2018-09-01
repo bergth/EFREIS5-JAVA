@@ -2,9 +2,9 @@ package com.company;
 import java.util.Scanner;
 
 public class player {
-    int temp[] = {-1, -1, -1, -1, -1, -1}; // je sais pas comment init temp, en gros ça va etre la somme des 1 ou 2 ou 3 en fonction des possibilités
-    // donc change en fonction des dés
-    int array[] = {-1, -1, -1, -1, -1, -1}; // ones, twos, threes ...
+    int temp[] = {-1, -1, -1, -1, -1, -1}; // contains the possible score for each box (ones, twos, threes...)
+                                            // donc change en fonction des dés
+    int array[] = {-1, -1, -1, -1, -1, -1}; // contains the scores sets for each box
     int total = 0;
     int menu_choice[] = new int[6]; // possibles choices of the menu
     Scanner keyboard = new Scanner(System.in);
@@ -41,8 +41,8 @@ public class player {
             System.out.print("Wich case do you want to keep? ");
             for(int i=0; i < temp.length; i++){
                 if(temp[i]!=-1){
-                    System.out.print(i+1);
-                    menu_choice[j]= i+1; // chaque case prend la valeur d'une case de temp qui ne contient pas -1
+                    System.out.print(i+1); // displays the boxes with possible score
+                    menu_choice[j]= i+1; // each index of this array take the value of each temp index that isn't set to -1
                     j++;
                 }
             }
@@ -62,12 +62,12 @@ public class player {
         */
     }
 
-    public void condition(int temp, int x){ // temp = valeur des dés a appeler, x = ones / twos / threes...
+    public void condition(int temp, int x){ // temp = value of the possible score by index of the array, x = value already there
         if (x != -1)
-            System.out.printf("ONES          | %d\n", x);
+            System.out.printf(" %d\n", x); // if a value is already there
         else if(x == -1 && temp !=-1)
-            System.out.printf("ONES          | \033[31m%d\033\n", temp);
+            System.out.printf(" \033[31m%d\033\n", temp); // a possible value to choose
         else
-            System.out.printf("ONES          | X\n");
+            System.out.printf(" X\n"); // no value possible
     }
 }
