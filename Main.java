@@ -1,47 +1,51 @@
 package com.company;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        int somme = 0;
-        Random rand = new Random();
+        int i,j;
         Dice[] DArray = new Dice[5];
-        for (int n = 0; n<DArray.length; n++){
-            DArray[n] = new Dice();
-            DArray[n].setValue(rand.nextInt((5) + 1) + 1);
-            System.out.println("|" + DArray[n].getValue() + "|");
-            somme = somme + DArray[n].getValue();
+        int[] ValueArray = new int[5];
+        for (i = 0;i<DArray.length;i++){
+            DArray[i] = new Dice();
         }
-        System.out.println("la somme des dés est : " + somme);
+        for (i = 0; i < 3; i++){
+            System.out.println("Round " + (i+1));
+            roll(DArray);
+            //table with value of dice
+            for (j = 0; j<ValueArray.length; j++){
+                ValueArray[j] = DArray[j].getValue();
+            }
+        }
+
+    }
+
+    //Roll Dice
+    private static void roll(Dice[] DiceArray){
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+        int n;
+        String KeepIt;
+        for (n = 0; n<DiceArray.length; n++){
+            //check if we keep the dice or not
+            if (!DiceArray[n].isKeep()){
+                DiceArray[n].setValue(rand.nextInt((5) + 1) + 1);
+            }
+            System.out.println("|" + DiceArray[n].getValue() + "|");
+        }
+        for (n = 0; n<DiceArray.length; n++){
+            do {
+                System.out.println("Do you want to keep the dice n°" + (n+1) +" |" + DiceArray[n].getValue() + "| ? (y/n)");
+                KeepIt = sc.nextLine();
+            }while(!KeepIt.equals("y") && !KeepIt.equals("n"));
+            if (KeepIt.equals("y"))
+                DiceArray[n].setKeep(true);
+            else
+                DiceArray[n].setKeep(false);
+        }
     }
 }
 
-/*{
-        String condition;
-        int dicekeep;
-        Scanner sc = new Scanner(System.in);
-        Random rand = new Random();
-        int somme = 0;
-        Dice DiceArray[] = new Dice[5];
-        for (int n = 0; n<DiceArray.length; n++){
-            DiceArray[n] = new Dice();
-            DiceArray[n].setValue(rand.nextInt((5) + 1) + 1);
-            System.out.println(DiceArray[n].getValue());
-            System.out.println(DiceArray[n].isKeep());
-            somme = somme + DiceArray[n].getValue();
-        }
-        System.out.println(somme);
-        do {
-            do {
-                System.out.println("Keep a dice ? :");
-                dicekeep = sc.nextInt();
-            } while (dicekeep <= 0 || dicekeep >= 6);
-            DiceArray[dicekeep - 1].setKeep(true);
-            do {
-                System.out.println("Keep another dice ? :");
-                condition = sc.nextLine();
-            }while(condition.equals("yes")  || condition.equals("no") );
-        }while (condition.equals("yes"));
-    }*/
