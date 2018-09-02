@@ -6,7 +6,7 @@ public class player {
     int temp[] = {-1, -1, -1, -1, -1, -1}; // contains the possible score for each box (ones, twos, threes...)
                                             // donc change en fonction des dés
     int array[] = {-1, -1, -1, -1, -1, -1}; // contains the scores sets for each box
-    int results[] = {-1,-1,-1,-1,-1};
+    int results[] = {-1,-1,-1,-1,-1}; // results of dices
     int total = 0;
     boolean menu_choice[] = {false,false,false,false,false,false}; // possibles choices of the menu
     Scanner keyboard = new Scanner(System.in);
@@ -53,21 +53,22 @@ public class player {
             choice = keyboard.nextInt();
 
                     if(menu_choice[choice-1]){
-                        // mettre ici le truc pour "bloquer" la case avec le score
+                        array[choice-1] = temp[choice-1];
+                        for(int i = 0; i < temp.length; i++)
+                        {
+                            temp[i] = -1;
+                        }
                 }
         }
 
-        while(choice != '0' || !menu_choice[choice]); /* Le choice != menu_choice[] je sais qu'il marche pas mais
-        je cherche un truc qui pourrait tester le tableau pour etre sûr que le joueur selectionne un nombre qui lui est
-        proposé
-        */
+        while(menu_choice[choice-1] == false);
     }
 
     public void condition(int temp, int x){ // temp = value of the possible score by index of the array, x = value already there
         if (x != -1)
             System.out.printf(" %d\n", x); // if a value is already there
         else if(x == -1 && temp !=-1)
-            System.out.printf(" \033[31m%d\033\n", temp); // a possible value to choose
+            System.out.printf(" -%d-\n", temp); // a possible value to choose
         else
             System.out.printf(" X\n"); // no value possible
     }
@@ -104,14 +105,16 @@ public class player {
             System.out.println("|" + DiceArray[n].getValue() + "|");
         }
         for (n = 0; n<DiceArray.length; n++){
-            do {
-                System.out.println("Do you want to keep the dice n°" + (n+1) +" |" + DiceArray[n].getValue() + "| ? (y/n)");
-                KeepIt = sc.nextLine();
-            }while(!KeepIt.equals("y") && !KeepIt.equals("n"));
-            if (KeepIt.equals("y"))
-                DiceArray[n].setKeep(true);
-            else
-                DiceArray[n].setKeep(false);
+            if(DiceArray[n].isKeep() == false) {
+                do {
+                    System.out.println("Do you want to keep the dice n°" + (n + 1) + " |" + DiceArray[n].getValue() + "| ? (y/n)");
+                    KeepIt = sc.nextLine();
+                } while (!KeepIt.equals("y") && !KeepIt.equals("n"));
+                if (KeepIt.equals("y"))
+                    DiceArray[n].setKeep(true);
+                else
+                    DiceArray[n].setKeep(false);
+            }
         }
     }
 
@@ -145,9 +148,11 @@ public class player {
 
     public void play()
     {
-        fill_arrays();
-        fill_result();
-        print();
+        while(true) {
+            fill_arrays();
+            fill_result();
+            print();
+        }
     }
 
 
