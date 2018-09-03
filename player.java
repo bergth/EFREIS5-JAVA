@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class player {
     int temp[] = {-1, -1, -1, -1, -1, -1}; // contains the possible score for each box (ones, twos, threes...)
-                                            // donc change en fonction des dés
+    // donc change en fonction des dés
     int array[] = {-1, -1, -1, -1, -1, -1}; // contains the scores sets for each box
     int results[] = {-1,-1,-1,-1,-1}; // results of dices
     int total = 0;
@@ -13,12 +13,13 @@ public class player {
 
     public void print(){
 
+        total = 0;
         for(int i = 0; i < array.length; i++) { // total of points
             if (array[i] != -1)
                 total += array[i];
         }
 
-        if(total > 63)// special rule
+        if(total >= 63)// special rule
             total += 35;
 
         System.out.printf("UPPER SECTION | Player 1 | Player 2\n");
@@ -37,31 +38,49 @@ public class player {
         System.out.printf("TOTAL         |%d\n", total);
         System.out.printf("UPPER TOTAL   |%d\n", total);
 
-        int choice = 0;
-        int j=0;
+        int choice = -1;
         do {
             System.out.println("Wich case do you want to keep? ");
             for(int i=0; i < temp.length; i++){
                 if(temp[i]!=-1){
-                    System.out.print(i+1); // displays the boxes with possible score
                     menu_choice[i]= true; // each index of this array take the value of each temp index that isn't set to -1
-                    j++;
                 }
+                if(array[i] == -1)
+                {
+                    System.out.print((i+1) + " "); // displays the boxes with possible score
+                }
+
             }
             System.out.println("");
-
-            choice = keyboard.nextInt();
-
-                    if(menu_choice[choice-1]){
-                        array[choice-1] = temp[choice-1];
-                        for(int i = 0; i < temp.length; i++)
-                        {
-                            temp[i] = -1;
-                        }
+            do {
+                if(keyboard.hasNextInt())
+                {
+                    choice = keyboard.nextInt();
                 }
-        }
+                else {
+                    System.out.println("Error input;");
+                    keyboard.nextLine();
+                }
+            }while(choice == -1);
 
-        while(menu_choice[choice-1] == false);
+            if(array[choice-1] == -1){
+                if(!menu_choice[choice-1])
+                {
+                    array[choice - 1] = 0;
+                }
+                else {
+                    array[choice - 1] = temp[choice - 1];
+                }
+                for(int i = 0; i < temp.length; i++)
+                {
+
+                    temp[i] = -1;
+                }
+                break;
+            }
+        }while(true);
+
+        //while(menu_choice[choice-1] == false || array[choice-1] == -1);
     }
 
     public void condition(int temp, int x){ // temp = value of the possible score by index of the array, x = value already there
@@ -83,7 +102,7 @@ public class player {
         }
         for (i = 0; i < 3; i++) {
             System.out.println("Round " + (i + 1));
-            roll(DArray);
+            roll(DArray, i);
             //table with value of dice
             for (j = 0; j < ValueArray.length; j++) {
                 ValueArray[j] = DArray[j].getValue();
@@ -92,7 +111,7 @@ public class player {
         return DArray;
     }
 
-    private static void roll(Dice[] DiceArray){
+    private static void roll(Dice[] DiceArray, int turn){
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
         int n;
@@ -104,8 +123,8 @@ public class player {
             }
             System.out.println("|" + DiceArray[n].getValue() + "|");
         }
-        for (n = 0; n<DiceArray.length; n++){
-            if(DiceArray[n].isKeep() == false) {
+        if (turn != 2){
+            for (n = 0; n<DiceArray.length; n++){
                 do {
                     System.out.println("Do you want to keep the dice n°" + (n + 1) + " |" + DiceArray[n].getValue() + "| ? (y/n)");
                     KeepIt = sc.nextLine();
@@ -148,7 +167,7 @@ public class player {
 
     public void play()
     {
-        while(true) {
+        for (int i = 0; i<6; i++)  {
             fill_arrays();
             fill_result();
             print();
