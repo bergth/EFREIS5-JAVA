@@ -12,3 +12,18 @@ public class Main {
 
 }
 
+
+/*CLASSES :
+        DICE
+        PLAYER
+        Resultats
+        array upper section / lower
+        afficher tableau
+        lancer dés
+        scores possibles
+        Menu scores possibles
+        tour
+        retour score total
+        GAME
+*/
+
