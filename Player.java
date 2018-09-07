@@ -133,16 +133,48 @@ public class Player
     
     public void find_upper_choices()
     {
-        //FIXME
+        for(int i = 0; i < dices_result.length; i++)
+        {
+            int curr = dices_result[i];
+            if(choice_possible_upper[curr-1] != -1)
+            {
+                choice_possible_upper[curr-1] += curr;
+            }
+        }
     }
 
     /**
      * Find by reading 'dice_result' and filling 'choice_possible_upper'
      * if a user can do a 3 or 4 of king, full house or Yahtzee
      */
-    public void find_kind_yahtzee_house()
+    public void find_kind()
     {
-        //FIXME
+        int[] nb = {0,0,0,0,0};
+        for(int i = 0; i < dices_result.length; i++)
+        {
+            nb[dices_result[i]-1] += 1;
+        }
+
+        int max = 0;
+        int index_max = 0;
+        for(int i = 0; i < nb.length; i++)
+        {
+            if(nb[i] > max)
+            {
+                max = nb;
+                index_max = i;
+            }
+        }
+
+        if(max == 3 && choice_possible_lower[0] != -1)
+        {
+            choice_possible_lower[0] = 3 * (index_max + 1);
+        }
+        
+        if(max == 4 && choice_possible_lower[1] != -1)
+        {
+            choice_possible_lower[1] = 4 * (index_max + 1);
+        }
     }
     
     /**
