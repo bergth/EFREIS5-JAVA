@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -125,8 +126,43 @@ public class Player
      */
     public void roll_dices()
     {
-        // FIXME
+        int i, j;
+        String KeepIt;//Condition to keep or not a Dice
+        Scanner sc = new Scanner(System.in);
+        Dice DiceArray[] = new Dice[5];//Initialization Array of 5 dices
+        Random rand = new Random();
+        for (i = 0; i < DiceArray.length; i++)
+            DiceArray[i] = new Dice();//Initialization of each dice
+        for (int round = 0; round < 2; round++){
+            System.out.println("\n---ROLL N°" + (round +1) +"---\n");//Print the actual Roll
+            for (i = 0; i < DiceArray.length; i++){
+                if (DiceArray[i].isKeep() == false){
+                    DiceArray[i].setValue(rand.nextInt(5 + 1) + 1);//Random number between 1 & 6
+                }
+                System.out.println("Dice n°" + (i+1) + "|" + DiceArray[i].getValue()+ "|");
+            }
+            //Selection for each Dice
+            for (j = 0; j < 5; j++){
+                do {
+                    System.out.println("Do you want to keep the dice n°" + (j+1) +" |" + DiceArray[j].getValue() + "| ? (y/n)");
+                    KeepIt = sc.nextLine();
+                }while(!KeepIt.equals("y") && !KeepIt.equals("n"));
+                if (KeepIt.equals("y"))
+                    DiceArray[j].setKeep(true);//User keep the dice
+                else
+                    DiceArray[j].setKeep(false);
+            }
+        }
+        System.out.println("\n---ROLL N°3---\n");
+        for (i = 0; i < DiceArray.length; i++){
+            if (DiceArray[i].isKeep() == false){
+                DiceArray[i].setValue(rand.nextInt(5 + 1) + 1);
+            }
+            System.out.println("Dice n°" + (i+1) + "|" + DiceArray[i].getValue()+ "|");
+        }
     }
+
+
 
     /**
      * 
