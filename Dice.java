@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
-
 public class Dice {
     private
         int value;
@@ -25,4 +21,3 @@ public class Dice {
         return value;
     }
 }
->>>>>>> a5b6edd51193b5ebbe8bfef550d589811265b6f5

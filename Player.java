@@ -1,5 +1,5 @@
 import java.util.Arrays;
-package com.company;
+
 
 public class Player
 {
@@ -164,17 +164,17 @@ public class Player
         {
             if(nb[i] > max)
             {
-                max = nb;
+                max = nb[i];
                 index_max = i;
             }
         }
 
         if(max == 3)
         {
-            bool full_house = false;
+            boolean full_house = false;
             if(choice_possible_lower[2] != -1)
             {
-                for(int i = 0; i < nb.lenght; i++)
+                for(int i = 0; i < nb.length; i++)
                 {
                     if(i != index_max && nb[i] == 2)
                     {
