@@ -6,6 +6,23 @@ public class Player
     // result of upper and lower section
     int[] upper_section = {0,0,0,0,0,0};
     int[] lower_section = {0,0,0,0,0,0,0};
+    String[] upper_section_name = {
+        "Aces",
+        "Twos",
+        "Threes",
+        "Fours",
+        "Fives",
+        "Sixes"
+    };
+    String[] lower_section_name = {
+        "3 of kind",
+        "4 of king",
+        "Full House",
+        "Sm.Straight",
+        "Lg.Straight",
+        "YAHTZEE",
+        "Chance"
+    };
 
     // result of dices
     int[] dices_result = {0,0,0,0,0};
@@ -50,61 +67,48 @@ public class Player
 
         int grand_total = total_lower + total_upper;
 
-        System.out.printf("┌─────────────────────────┐");
-        System.out.printf("\n│ UPPER SECTION           │");
-        System.out.printf("\n├──────────────────┬──────┤");
-        System.out.printf("\n│ 1.  Aces         │ %4d │",upper_section[0]);
-        if(choice_possible_upper[0] > 0)
-            System.out.print(" <- " + choice_possible_upper[0]);
-        System.out.printf("\n│ 2.  Twos         │ %4d │",upper_section[1]);
-        if(choice_possible_upper[1] > 0)
-            System.out.print(" <- " + choice_possible_upper[0]);
-        System.out.printf("\n│ 3.  Threes       │ %4d │",upper_section[2]);
-        if(choice_possible_upper[2] > 0)
-            System.out.print(" <- " + choice_possible_upper[0]);
-        System.out.printf("\n│ 4.  Fours        │ %4d │",upper_section[3]);
-        if(choice_possible_upper[3] > 0)
-            System.out.print(" <- " + choice_possible_upper[0]);
-        System.out.printf("\n│ 5.  Fives        │ %4d │",upper_section[4]);
-        if(choice_possible_upper[4] > 0)
-            System.out.print(" <- " + choice_possible_upper[0]);
-        System.out.printf("\n│ 6.  Sixes        │ %4d │",upper_section[5]);
-        if(choice_possible_upper[5] > 0)
-            System.out.print(" <- " + choice_possible_upper[0]);
-        System.out.printf("\n├──────────────────┼──────┤");
-        System.out.printf("\n│ TOTAL SCORE      │ %4d │",total_upper);
-        System.out.printf("\n│ BONUS (> 63)     │ %4d │",bonus_upper);
-        System.out.printf("\n│ TOTAL UPPER      │ %4d │",total_upper_bonus);
-        System.out.printf("\n├──────────────────┴──────┤");
-        System.out.printf("\n│ LOWER SECTION           │");
-        System.out.printf("\n├──────────────────┬──────┤");
-        System.out.printf("\n│ 7.  3 of a kind  │ %4d │",lower_section[0]);
-        if(choice_possible_lower[0] > 0)
-            System.out.print(" <- " + choice_possible_lower[0]);
-        System.out.printf("\n│ 8.  4 of a kind  │ %4d │",lower_section[1]);
-        if(choice_possible_lower[1] > 0)
-            System.out.print(" <- " + choice_possible_lower[1]);
-        System.out.printf("\n│ 9.  Full House   │ %4d │",lower_section[2]);
-        if(choice_possible_lower[2] > 0)
-            System.out.print(" <- " + choice_possible_lower[2]);
-        System.out.printf("\n│ 10. Sm. Straight │ %4d │",lower_section[3]);
-        if(choice_possible_lower[3] > 0)
-            System.out.print(" <- " + choice_possible_lower[3]);
-        System.out.printf("\n│ 11. Lg. Straight │ %4d │",lower_section[4]);
-        if(choice_possible_lower[4] > 0)
-            System.out.print(" <- " + choice_possible_lower[4]);
-        System.out.printf("\n│ 12. YAHTZEE      │ %4d │",lower_section[5]);
-        if(choice_possible_lower[5] > 0)
-            System.out.print(" <- " + choice_possible_lower[5]);
-        System.out.printf("\n│ 13. Chance       │ %4d │",lower_section[6]);
-        if(choice_possible_lower[6] > 0)
-            System.out.print(" <- " + choice_possible_lower[6]);
-        System.out.printf("\n├──────────────────┼──────┤");
-        System.out.printf("\n│ each bonus       │ %4d │",each_bonus);
-        System.out.printf("\n│ score 100 bonus  │ %4d │",score_100);
-        System.out.printf("\n├──────────────────┼──────┤");
-        System.out.printf("\n│ GRAND TOTAL      │ %4d │",grand_total);
-        System.out.printf("\n└──────────────────┴──────┘\n");
+        System.out.printf("┌─────────────────────────┐\n");
+        System.out.printf("│ UPPER SECTION           │\n");
+        System.out.printf("├──────────────────┬──────┤\n");
+        
+        for(int i = 0; i < upper_section.length; i++)
+        {
+            System.out.printf("│ %2d.  %11s ",i+1,upper_section_name[i]);
+            if(choice_possible_upper[0] == -1)
+                System.out.printf("│ %4d │",upper_section[i]);
+            else
+                System.out.printf("│      │");
+            if(choice_possible_upper[i] > 0)
+                System.out.print(" <- " + choice_possible_upper[i]);
+            System.out.println("");
+        }
+        
+        System.out.printf("├──────────────────┼──────┤\n");
+        System.out.printf("│ TOTAL SCORE      │ %4d │\n",total_upper);
+        System.out.printf("│ BONUS (> 63)     │ %4d │\n",bonus_upper);
+        System.out.printf("│ TOTAL UPPER      │ %4d │\n",total_upper_bonus);
+        System.out.printf("├──────────────────┴──────┤\n");
+        System.out.printf("│ LOWER SECTION           │\n");
+        System.out.printf("├──────────────────┬──────┤\n");
+        
+        for(int i = 0; i < lower_section.length; i++)
+        {
+            System.out.printf("│ %2d.  %11s ",i+7,lower_section_name[i]);
+            if(choice_possible_lower[0] == -1)
+                System.out.printf("│ %4d │",lower_section[i]);
+            else
+                System.out.printf("│      │");
+            if(choice_possible_lower[i] > 0)
+                System.out.print(" <- " + choice_possible_lower[i]);
+            System.out.println("");
+        }
+        
+        System.out.printf("├──────────────────┼──────┤\n");
+        System.out.printf("│ each bonus       │ %4d │\n",each_bonus);
+        System.out.printf("│ score 100 bonus  │ %4d │\n",score_100);
+        System.out.printf("├──────────────────┼──────┤\n");
+        System.out.printf("│ GRAND TOTAL      │ %4d │\n",grand_total);
+        System.out.printf("└──────────────────┴──────┘\n");
 
     }
 
@@ -229,7 +233,7 @@ public class Player
     public boolean is_end()
     {
         // FIXME
-        return false;
+       return false;
     }
 
     /**
