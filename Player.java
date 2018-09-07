@@ -1,3 +1,6 @@
+import java.util.Arrays;
+package com.company;
+
 public class Player
 {
     // name of the player
@@ -134,7 +137,7 @@ public class Player
 
     /**
      * Find by reading 'dice_result' and filling 'choice_possible_upper'
-     * if a user can do a 3 or 4 of king, full house or Yahtzee
+     * if a user can do a 3 or 4 of a king, full house or Yahtzee
      */
     public void find_kind_yahtzee_house()
     {
@@ -147,7 +150,37 @@ public class Player
      */
     public void find_straight()
     {
-        //FIXME
+        Arrays.sort(dices_result);
+        int res = 0, compt = 0;
+        if(choice_possible_upper[6] != -1)
+        {
+
+            for(int i = 0; i < dices_result.length - 1; i++)
+            {
+                if(dices_result[i] == dices_result[i+1] - 1)
+                {
+                    compt += 1;
+                }
+            }
+
+            if(compt == 4)
+            {
+                choice_possible_upper[4] = 40;
+                choice_possible_upper[3] = 30;
+            }
+
+            if (compt == 3)
+            {
+                choice_possible_upper[4] = 0;
+                choice_possible_upper[3] = 30;
+            }
+
+            else
+            {
+                choice_possible_upper[4] = 0;
+                choice_possible_upper[3] = 0;
+            }
+        }
     }
 
 
@@ -223,7 +256,7 @@ public class Player
 
     
     /**
-     * @return true if the player fill all the arrays.
+     * @return true if the player fills all the arrays.
      */
 
     public boolean is_end()
@@ -238,7 +271,8 @@ public class Player
      */
     public int get_result()
     {
-        // FIXME
+        //voir début de fonction d'affichage
+
         return -1;
     }
 }
