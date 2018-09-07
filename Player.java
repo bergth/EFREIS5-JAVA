@@ -71,48 +71,48 @@ public class Player
 
         int grand_total = total_lower + total_upper;
 
-        System.out.printf("┌─────────────────────────┐\n");
-        System.out.printf("│ UPPER SECTION           │\n");
-        System.out.printf("├──────────────────┬──────┤\n");
+        System.out.printf("+-------------------------+\n");
+        System.out.printf("| UPPER SECTION           |\n");
+        System.out.printf("+-------------------------+\n");
         
         for(int i = 0; i < upper_section.length; i++)
         {
-            System.out.printf("│ %2d.  %11s ",i+1,upper_section_name[i]);
+            System.out.printf("| %2d.  %11s ",i+1,upper_section_name[i]);
             if(choice_possible_upper[0] == -1)
-                System.out.printf("│ %4d │",upper_section[i]);
+                System.out.printf("| %4d |",upper_section[i]);
             else
-                System.out.printf("│      │");
+                System.out.printf("|      |");
             if(choice_possible_upper[i] > 0)
                 System.out.print(" <- " + choice_possible_upper[i]);
             System.out.println("");
         }
         
-        System.out.printf("├──────────────────┼──────┤\n");
-        System.out.printf("│ TOTAL SCORE      │ %4d │\n",total_upper);
-        System.out.printf("│ BONUS (> 63)     │ %4d │\n",bonus_upper);
-        System.out.printf("│ TOTAL UPPER      │ %4d │\n",total_upper_bonus);
-        System.out.printf("├──────────────────┴──────┤\n");
-        System.out.printf("│ LOWER SECTION           │\n");
-        System.out.printf("├──────────────────┬──────┤\n");
+        System.out.printf("+------------------+-------+\n");
+        System.out.printf("| TOTAL SCORE      | %4d |\n",total_upper);
+        System.out.printf("| BONUS (> 63)     | %4d |\n",bonus_upper);
+        System.out.printf("| TOTAL UPPER      | %4d |\n",total_upper_bonus);
+        System.out.printf("+------------------+------+\n");
+        System.out.printf("| LOWER SECTION           |\n");
+        System.out.printf("+------------------+------+\n");
         
         for(int i = 0; i < lower_section.length; i++)
         {
-            System.out.printf("│ %2d.  %11s ",i+7,lower_section_name[i]);
+            System.out.printf("| %2d.  %11s ",i+7,lower_section_name[i]);
             if(choice_possible_lower[0] == -1)
-                System.out.printf("│ %4d │",lower_section[i]);
+                System.out.printf("| %4d |",lower_section[i]);
             else
-                System.out.printf("│      │");
+                System.out.printf("|      |");
             if(choice_possible_lower[i] > 0)
                 System.out.print(" <- " + choice_possible_lower[i]);
             System.out.println("");
         }
         
-        System.out.printf("├──────────────────┼──────┤\n");
-        System.out.printf("│ each bonus       │ %4d │\n",each_bonus);
-        System.out.printf("│ score 100 bonus  │ %4d │\n",score_100);
-        System.out.printf("├──────────────────┼──────┤\n");
-        System.out.printf("│ GRAND TOTAL      │ %4d │\n",grand_total);
-        System.out.printf("└──────────────────┴──────┘\n");
+        System.out.printf("+------------------+------+\n");
+        System.out.printf("| each bonus       | %4d |\n",each_bonus);
+        System.out.printf("| score 100 bonus  | %4d |\n",score_100);
+        System.out.printf("+------------------+------+\n");
+        System.out.printf("| GRAND TOTAL      | %4d |\n",grand_total);
+        System.out.printf("+------------------+------+\n");
 
     }
 
