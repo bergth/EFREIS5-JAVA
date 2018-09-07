@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+
+package com.company;
+=======
 
 
+>>>>>>> a5b6edd51193b5ebbe8bfef550d589811265b6f5
 
 public class Main {
 
