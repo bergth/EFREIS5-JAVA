@@ -1,14 +1,11 @@
-package com.company;
-
-
 public class Main {
 
     public static void main(String[] args) {
-        player p1 = new player();
-        p1.play();
+        System.out.println("Hello ! Yahtzee !");
+
+        Player p1 = new Player();
+        p1.print_result();
+
+        System.out.println("Bye ! Yahtzee !");
     }
-
-    //Roll Dice
-
 }
-
