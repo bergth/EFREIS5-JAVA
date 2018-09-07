@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 
 public class Player
@@ -308,6 +309,9 @@ public class Player
      */
     public String get_name()
     {
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("enter your name :");
+        String name = keyboard.nextLine();
         return name;
     }
 
