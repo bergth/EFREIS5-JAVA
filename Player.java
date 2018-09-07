@@ -166,17 +166,40 @@ public class Player
             }
         }
 
-        if(max == 3 && choice_possible_lower[0] != -1)
+        if(max == 3)
         {
-            choice_possible_lower[0] = 3 * (index_max + 1);
+            bool full_house = false;
+            if(choice_possible_lower[2] != -1)
+            {
+                for(int i = 0; i < nb.lenght; i++)
+                {
+                    if(i != index_max && nb[i] == 2)
+                    {
+                        full_house = true;
+                    }
+                }
+                if(full_house)
+                {
+                    choice_possible_lower[2] = 25;
+                }
+            }
+            if(choice_possible_lower[0] != -1)
+                choice_possible_lower[0] = 3 * (index_max + 1);
         }
         
         if(max == 4 && choice_possible_lower[1] != -1)
         {
             choice_possible_lower[1] = 4 * (index_max + 1);
         }
+
+        if(max == 5 && choice_possible_lower[5] != -1)
+        {
+            choice_possible_lower[5] = 50;
+        }
     }
     
+
+
     /**
      * Find by reading 'dice_result' and filling 'choice_possible_upper'
      * if a user can do a small or large Straight
@@ -252,7 +275,6 @@ public class Player
      */
     public String get_name()
     {
-        // FIXME
         return name;
     }
 
