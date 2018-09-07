@@ -9,3 +9,18 @@ public class Main {
         System.out.println("Bye ! Yahtzee !");
     }
 }
+
+
+/*CLASSES :
+        DICE
+        PLAYER
+        Resultats
+        array upper section / lower
+        afficher tableau
+        lancer dés
+        scores possibles
+        Menu scores possibles
+        tour
+        retour score total
+        GAME
+*/
