@@ -18,13 +18,57 @@ public class Main {
         System.out.println("      :  \\  \\;  :   .'   \\|  | ,'     |  ,   / ;   |  .'    |   :    ||   :    |        |    |`.  ");
         System.out.println("       \\  ' ;|  ,     .-./`--''        ---`-'  `---'         \\   \\  /  \\   \\  /         `-- -`, ; ");
         System.out.println("        `--`  `--`---'                                        `----'    `----'            '---`\"  ");
+        System.out.println("");
+        System.out.println("");
     }
+
+    private static void run_game(int nb_player)
+    {
+        Player[] players = new Player[nb_player];
+        for(int i = 0; i < players.length; i++)
+        {
+            players[i] = new Player();
+        }
+
+        boolean game_end = false;
+        while(!game_end)
+        {
+            for(int i = 0; i < players.length && !game_end; i++)
+            {
+                System.out.printf("*-------------------*\n");
+                System.out.printf("| Player n° %2d !    |\n",i+1);
+                System.out.printf("*-------------------*\n");
+                players[i].round();
+                if(players[i].is_end())
+                {
+                    game_end = true;
+                }
+            }
+        }
+
+        System.out.println("Game end !\n");
+        System.out.println("Result:\n");
+        int max = 0;
+        int id_max = 0;
+        for(int i = 0; i < players.length; i++)
+        {
+            int result = players[i].get_result();
+            System.out.printf("Player %2d: %d\n",i,result);
+            if(result > max)
+            {
+                max = result;
+                id_max = i;
+            }
+        }
+
+        System.out.println("Player " + (id_max+1) + " win !");
+    }
+
 
     public static void main(String[] args) {
         System.out.println("Hello ! Yahtzee !");
         print_logo();
-        Player p1 = new Player();
-        p1.round();
+        run_game(2);
 
         System.out.println("Bye ! Yahtzee !");
     }

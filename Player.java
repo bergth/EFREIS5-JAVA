@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
 
 
 public class Player
@@ -40,8 +39,8 @@ public class Player
 
     // Information about the possible choice for a round after the roll of dices
     // -1 = already set, 0 = no choice possible, > 0 = score possible if chosen
-    int[] choice_possible_upper = {1,1,1,1,1,1};
-    int[] choice_possible_lower = {1,1,1,1,1,1,1};
+    int[] choice_possible_upper = {0,0,0,0,0,0};
+    int[] choice_possible_lower = {0,0,0,0,0,0,0};
 
 
     /**
@@ -81,7 +80,7 @@ public class Player
         for(int i = 0; i < upper_section.length; i++)
         {
             System.out.printf("| %2d.  %11s ",i+1,upper_section_name[i]);
-            if(choice_possible_upper[0] == -1)
+            if(choice_possible_upper[i] == -1)
                 System.out.printf("| %4d |",upper_section[i]);
             else
                 System.out.printf("|      |");
@@ -101,7 +100,7 @@ public class Player
         for(int i = 0; i < lower_section.length; i++)
         {
             System.out.printf("| %2d.  %11s ",i+7,lower_section_name[i]);
-            if(choice_possible_lower[0] == -1)
+            if(choice_possible_lower[i] == -1)
                 System.out.printf("| %4d |",lower_section[i]);
             else
                 System.out.printf("|      |");
@@ -118,6 +117,18 @@ public class Player
         System.out.printf("+------------------+------+\n");
 
     }
+
+
+    public void print_dices()
+    {
+        System.out.println("+---+---+---+---+---+");
+        System.out.printf("| %1d | %1d | %1d | %1d | %1d |\n",dices_result[0],dices_result[1],dices_result[2],dices_result[3],dices_result[4]);
+        System.out.println("+---+---+---+---+---+");
+        System.out.println("  ^   ^   ^   ^   ^  ");
+        System.out.println("  1   2   3   4   5  ");
+    }
+
+
 
 
     /**
@@ -140,9 +151,10 @@ public class Player
             for (i = 0; i < DiceArray.length; i++){
                 if (DiceArray[i].isKeep() == false){
                     DiceArray[i].setValue(rand.nextInt(5 + 1) + 1);//Random number between 1 & 6
+                    dices_result[i] = DiceArray[i].getValue();
                 }
-                System.out.println("Dice n°" + (i+1) + "|" + DiceArray[i].getValue()+ "|");
             }
+            print_dices();
             //Selection for each Dice
             for (j = 0; j < 5; j++){
                 do {
@@ -159,14 +171,13 @@ public class Player
         for (i = 0; i < DiceArray.length; i++){
             if (DiceArray[i].isKeep() == false){
                 DiceArray[i].setValue(rand.nextInt(5 + 1) + 1);
+                dices_result[i] = DiceArray[i].getValue();
             }
-            System.out.println("Dice n°" + (i+1) + "|" + DiceArray[i].getValue()+ "|");
         }
+        
+        print_dices();
 
-        for(int k = 0; k < 5; k++)
-        {
-            dices_result[k] = DiceArray[k].getValue();
-        }
+
     }
 
 
@@ -196,7 +207,7 @@ public class Player
      */
     public void find_kind()
     {
-        int[] nb = {0,0,0,0,0};
+        int[] nb = {0,0,0,0,0,0};
         for(int i = 0; i < dices_result.length; i++)
         {
             nb[dices_result[i]-1] += 1;
@@ -255,8 +266,8 @@ public class Player
     {
         Arrays.sort(dices_result);
 
-        int res = 0, compt = 0;
-        if(choice_possible_upper[4] != -1 || choice_possible_upper[5] != -1)
+        int compt = 0;
+        if(choice_possible_lower[4] != -1 || choice_possible_lower[5] != -1)
         {
 
             for(int i = 0; i < dices_result.length - 1; i++)
@@ -267,41 +278,41 @@ public class Player
                 }
             }
 
-            if(compt == 4 && choice_possible_upper[5] != -1)
-                choice_possible_upper[5] = 40;
+            if(compt == 4 && choice_possible_lower[5] != -1)
+                choice_possible_lower[5] = 40;
 
-            if(compt == 4 && choice_possible_upper[4] != -1)
-                choice_possible_upper[4] = 30;
+            if(compt == 4 && choice_possible_lower[4] != -1)
+                choice_possible_lower[4] = 30;
 
-            if(compt == 3 && choice_possible_upper[5] != -1)
-                choice_possible_upper[5] = 0;
+            if(compt == 3 && choice_possible_lower[5] != -1)
+                choice_possible_lower[5] = 0;
 
-            if(compt == 3 && choice_possible_upper[4] != -1)
-                choice_possible_upper[4] = 30;
+            if(compt == 3 && choice_possible_lower[4] != -1)
+                choice_possible_lower[4] = 30;
 
-            if(compt < 3 && choice_possible_upper[5] != -1)
-                choice_possible_upper[5] = 0;
+            if(compt < 3 && choice_possible_lower[5] != -1)
+                choice_possible_lower[5] = 0;
 
-            if(compt < 3 && choice_possible_upper[4] != -1)
-                choice_possible_upper[4] = 0;
+            if(compt < 3 && choice_possible_lower[4] != -1)
+            choice_possible_lower[4] = 0;
         }
     }
 
 
     /**
-     * Find by reading 'dice_result' and filling 'choice_possible_upper'
+     * Find by reading 'dice_result' and filling 'choice_possible_lower'
      * if a user can do a chance
      */
     public void find_chance()
     {
-        if(choice_possible_upper[6] != -1)
+        if(choice_possible_lower[6] != -1)
         {
             int res = 0;
             for(int i = 0; i < dices_result.length; i++)
             {
                 res += dices_result[i];
             }
-            choice_possible_upper[6] = res;
+            choice_possible_lower[6] = res;
         }
     }
 
@@ -324,7 +335,34 @@ public class Player
         print_result();
         System.out.println("What is your choice ?");
         Scanner scan = new Scanner(System.in);
-        int choix = scan.nextInt();
+        int choix = -1;
+        boolean choice_made = false;
+        do
+        {
+            choix = scan.nextInt();
+            if(choix >= 0 && choix <= 13)
+            {
+                if(choix <= 6)
+                {
+                    if(choice_possible_upper[choix-1] != -1)
+                    {
+                        upper_section[choix-1] = choice_possible_upper[choix-1];
+                        choice_possible_upper[choix-1] = -1;
+                        choice_made = true;
+                    }
+                }
+                else
+                {
+                    if(choice_possible_lower[choix-7] != -1)
+                    {
+                        lower_section[choix-7] = choice_possible_lower[choix-7];
+                        choice_possible_lower[choix-7] = -1;
+                        choice_made = true;
+                    }
+                }
+            }
+        }while(!choice_made);
+        
     }
 
  
@@ -356,12 +394,12 @@ public class Player
         roll_dices();
         find_choice();
         ask_choice();
+        clean_arrays(); 
         print_result();
-        clean_arrays();
     }
 
 
-       /**
+    /**
      * @return the name of the player
      */
     public String get_name()
