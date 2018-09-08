@@ -359,8 +359,16 @@ public class Player
 
     public boolean is_end()
     {
-        // FIXME
-       return false;
+        int i;
+        for (i = 0; i <= 13; i++) { //Look if all choices of upper part are empty or not
+            if (choice_possible_upper[i] != -1)
+                return false;
+        }
+        for (i = 0; i <= 13; i++) { //Look if all choices of lower part are empty or not
+            if (choice_possible_upper[i] != -1)
+                return false;
+        }
+       return true;
     }
 
     /**
