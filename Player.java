@@ -2,6 +2,8 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+import jdk.nashorn.internal.runtime.regexp.joni.ScanEnvironment;
+
 
 public class Player
 {
@@ -160,6 +162,11 @@ public class Player
             }
             System.out.println("Dice n°" + (i+1) + "|" + DiceArray[i].getValue()+ "|");
         }
+
+        for(int k = 0; k < 5; k++)
+        {
+            dices_result[k] = DiceArray[k].getValue();
+        }
     }
 
 
@@ -247,7 +254,7 @@ public class Player
     public void find_straight()
     {
         Arrays.sort(dices_result);
-        int res = 0, compt = 0;
+        int compt = 0;
         if(choice_possible_upper[6] != -1)
         {
 
@@ -297,6 +304,15 @@ public class Player
         }
     }
 
+    void find_choice()
+    {
+        find_upper_choices();
+        find_kind();
+        find_straight();
+        find_chance();
+    }
+
+
     /**
      * Ask the choice of the user and make the modification on the array
      * 
@@ -304,7 +320,10 @@ public class Player
      */
     private void ask_choice()
     {
-        //FIXME
+        print_result();
+        System.out.println("What is your choice ?");
+        Scanner scan = new Scanner(System.in);
+        int choix = scan.nextInt();
     }
 
  
@@ -334,6 +353,7 @@ public class Player
     public void round()
     {
         roll_dices();
+        find_choice();
         ask_choice();
         print_result();
         clean_arrays();
