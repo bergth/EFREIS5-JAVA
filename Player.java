@@ -254,8 +254,9 @@ public class Player
     public void find_straight()
     {
         Arrays.sort(dices_result);
-        int compt = 0;
-        if(choice_possible_upper[6] != -1)
+
+        int res = 0, compt = 0;
+        if(choice_possible_upper[4] != -1 || choice_possible_upper[5] != -1)
         {
 
             for(int i = 0; i < dices_result.length - 1; i++)
@@ -266,23 +267,23 @@ public class Player
                 }
             }
 
-            if(compt == 4)
-            {
-                choice_possible_upper[4] = 40;
-                choice_possible_upper[3] = 30;
-            }
+            if(compt == 4 && choice_possible_upper[5] != -1)
+                choice_possible_upper[5] = 40;
 
-            if (compt == 3)
-            {
-                choice_possible_upper[4] = 0;
-                choice_possible_upper[3] = 30;
-            }
+            if(compt == 4 && choice_possible_upper[4] != -1)
+                choice_possible_upper[4] = 30;
 
-            else
-            {
+            if(compt == 3 && choice_possible_upper[5] != -1)
+                choice_possible_upper[5] = 0;
+
+            if(compt == 3 && choice_possible_upper[4] != -1)
+                choice_possible_upper[4] = 30;
+
+            if(compt < 3 && choice_possible_upper[5] != -1)
+                choice_possible_upper[5] = 0;
+
+            if(compt < 3 && choice_possible_upper[4] != -1)
                 choice_possible_upper[4] = 0;
-                choice_possible_upper[3] = 0;
-            }
         }
     }
 
