@@ -31,7 +31,7 @@ public class Player
     };
 
     // result of dices
-    int[] dices_result = {0,0,0,0,0};
+    int[] dices_result = {1,1,1,1,1};
 
     // bonuses 
     int each_bonus = 0;
@@ -71,7 +71,7 @@ public class Player
 
         total_lower += each_bonus + score_100;
 
-        int grand_total = total_lower + total_upper;
+        int grand_total = total_lower + total_upper_bonus;
 
         System.out.printf("+-------------------------+\n");
         System.out.printf("| UPPER SECTION           |\n");
@@ -89,7 +89,7 @@ public class Player
             System.out.println("");
         }
         
-        System.out.printf("+------------------+-------+\n");
+        System.out.printf("+------------------+------+\n");
         System.out.printf("| TOTAL SCORE      | %4d |\n",total_upper);
         System.out.printf("| BONUS (> 63)     | %4d |\n",bonus_upper);
         System.out.printf("| TOTAL UPPER      | %4d |\n",total_upper_bonus);
@@ -264,11 +264,11 @@ public class Player
      */
     public void find_straight()
     {
-        Arrays.sort(dices_result);
 
-        int compt = 0;
-        if(choice_possible_lower[4] != -1 || choice_possible_lower[5] != -1)
+        int compt = 1;
+        if(choice_possible_lower[3] != -1 || choice_possible_lower[4] != -1)
         {
+            int max = 0;
 
             for(int i = 0; i < dices_result.length - 1; i++)
             {
@@ -276,25 +276,23 @@ public class Player
                 {
                     compt += 1;
                 }
+                else if(dices_result[i] != dices_result[i+1])
+                {
+                    if(compt > max)
+                    {
+                        max = compt;
+                        compt = 1;
+                    }
+                }
             }
+            if(compt > max)
+                max = compt;
 
-            if(compt == 4 && choice_possible_lower[5] != -1)
-                choice_possible_lower[5] = 40;
+            if(max >= 4 && choice_possible_lower[4] != -1)
+                choice_possible_lower[4] = 40;
 
-            if(compt == 4 && choice_possible_lower[4] != -1)
-                choice_possible_lower[4] = 30;
-
-            if(compt == 3 && choice_possible_lower[5] != -1)
-                choice_possible_lower[5] = 0;
-
-            if(compt == 3 && choice_possible_lower[4] != -1)
-                choice_possible_lower[4] = 30;
-
-            if(compt < 3 && choice_possible_lower[5] != -1)
-                choice_possible_lower[5] = 0;
-
-            if(compt < 3 && choice_possible_lower[4] != -1)
-            choice_possible_lower[4] = 0;
+            if(max >= 3 && choice_possible_lower[3] != -1)
+                choice_possible_lower[3] = 30;
         }
     }
 
@@ -318,6 +316,7 @@ public class Player
 
     void find_choice()
     {
+        Arrays.sort(dices_result);
         find_upper_choices();
         find_kind();
         find_straight();
@@ -333,13 +332,20 @@ public class Player
     private void ask_choice()
     {
         print_result();
-        System.out.println("What is your choice ?");
         Scanner scan = new Scanner(System.in);
         int choix = -1;
         boolean choice_made = false;
         do
         {
-            choix = scan.nextInt();
+            System.out.println("What is your choice ?");
+            try
+            {
+                choix = scan.nextInt();
+            }catch(Exception e)
+            {
+                choix = -1;
+                scan.nextLine();
+            }
             if(choix >= 0 && choix <= 13)
             {
                 if(choix <= 6)
@@ -391,11 +397,11 @@ public class Player
 
     public void round()
     {
+        print_result();
         roll_dices();
         find_choice();
         ask_choice();
         clean_arrays(); 
-        print_result();
     }
 
 
@@ -419,12 +425,12 @@ public class Player
     public boolean is_end()
     {
         int i;
-        for (i = 0; i <= 13; i++) { //Look if all choices of upper part are empty or not
+        for (i = 0; i < 6; i++) { //Look if all choices of upper part are empty or not
             if (choice_possible_upper[i] != -1)
                 return false;
         }
-        for (i = 0; i <= 13; i++) { //Look if all choices of lower part are empty or not
-            if (choice_possible_upper[i] != -1)
+        for (i = 0; i < 7; i++) { //Look if all choices of lower part are empty or not
+            if (choice_possible_lower[i] != -1)
                 return false;
         }
        return true;
@@ -436,8 +442,27 @@ public class Player
      */
     public int get_result()
     {
-        //voir début de fonction d'affichage
+        int total_upper = 0;
+        for(int i = 0; i < upper_section.length; i++)
+        {
+            total_upper += upper_section[i];
+        }
 
-        return -1;
+        int bonus_upper = 0;
+        if(total_upper >= 63)
+            bonus_upper = 35;
+
+        int total_upper_bonus = total_upper + bonus_upper;
+
+        int total_lower = 0;
+
+        for(int i = 0; i < lower_section.length; i++)
+        {
+            total_lower += lower_section[i];
+        }
+
+        total_lower += each_bonus + score_100;
+
+        return total_lower + total_upper_bonus;
     }
 }

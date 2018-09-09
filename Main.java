@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Main {
 
@@ -35,6 +36,7 @@ public class Main {
         {
             for(int i = 0; i < players.length && !game_end; i++)
             {
+                System.out.println("#####################################");
                 System.out.printf("*-------------------*\n");
                 System.out.printf("| Player n° %2d !    |\n",i+1);
                 System.out.printf("*-------------------*\n");
@@ -47,13 +49,13 @@ public class Main {
         }
 
         System.out.println("Game end !\n");
-        System.out.println("Result:\n");
+        System.out.println("Result:");
         int max = 0;
         int id_max = 0;
         for(int i = 0; i < players.length; i++)
         {
             int result = players[i].get_result();
-            System.out.printf("Player %2d: %d\n",i,result);
+            System.out.printf("Player %2d: %d\n",i + 1,result);
             if(result > max)
             {
                 max = result;
@@ -61,15 +63,28 @@ public class Main {
             }
         }
 
-        System.out.println("Player " + (id_max+1) + " win !");
+        System.out.println("\nPlayer " + (id_max+1) + " win !");
     }
 
 
     public static void main(String[] args) {
         System.out.println("Hello ! Yahtzee !");
         print_logo();
-        run_game(2);
-
+        int nb = 0;
+        Scanner scan = new Scanner(System.in);
+        while(nb <= 0)
+        {
+            System.out.println("Choose number of players (1 to n):");
+            try
+            {
+                nb = scan.nextInt();
+            }catch(Exception e)
+            {
+                nb = 0;
+                scan.nextLine();
+            }
+        }
+        run_game(nb);
         System.out.println("Bye ! Yahtzee !");
     }
 }
