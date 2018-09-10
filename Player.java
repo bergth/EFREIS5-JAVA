@@ -208,9 +208,11 @@ public class Player
     public void find_kind()
     {
         int[] nb = {0,0,0,0,0,0};
+        int res = 0;
         for(int i = 0; i < dices_result.length; i++)
         {
             nb[dices_result[i]-1] += 1;
+            res += dices_result[i];
         }
 
         int max = 0;
@@ -242,12 +244,12 @@ public class Player
                 }
             }
             if(choice_possible_lower[0] != -1)
-                choice_possible_lower[0] = 3 * (index_max + 1);
+                choice_possible_lower[0] = res;
         }
         
         if(max == 4 && choice_possible_lower[1] != -1)
         {
-            choice_possible_lower[1] = 4 * (index_max + 1);
+            choice_possible_lower[1] = res;
         }
 
         if(max == 5 && choice_possible_lower[5] != -1)
@@ -288,10 +290,10 @@ public class Player
             if(compt > max)
                 max = compt;
 
-            if(max >= 4 && choice_possible_lower[4] != -1)
+            if(max >= 5 && choice_possible_lower[4] != -1)
                 choice_possible_lower[4] = 40;
 
-            if(max >= 3 && choice_possible_lower[3] != -1)
+            if(max >= 4 && choice_possible_lower[3] != -1)
                 choice_possible_lower[3] = 30;
         }
     }
