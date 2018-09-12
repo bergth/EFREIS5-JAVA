@@ -23,6 +23,8 @@ public class Main {
         System.out.println("");
     }
 
+
+    
     private static void run_game(int nb_player)
     {
         Player[] players = new Player[nb_player];
@@ -34,7 +36,7 @@ public class Main {
         boolean game_end = false;
         while(!game_end)
         {
-            for(int i = 0; i < players.length && !game_end; i++)
+            for(int i = 0; i < players.length; i++)
             {
                 System.out.println("#####################################");
                 System.out.printf("*-------------------*\n");
@@ -70,36 +72,21 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello ! Yahtzee !");
         print_logo();
-        int nb = 0;
+        int nb_players = 0;
         Scanner scan = new Scanner(System.in);
-        while(nb <= 0)
+        while(nb_players <= 0)
         {
             System.out.println("Choose number of players (1 to n):");
             try
             {
-                nb = scan.nextInt();
+                nb_players = scan.nextInt();
             }catch(Exception e)
             {
-                nb = 0;
+                nb_players = 0;
                 scan.nextLine();
             }
         }
-        run_game(nb);
+        run_game(nb_players);
         System.out.println("Bye ! Yahtzee !");
     }
 }
-
-
-/*CLASSES :
-        DICE
-        PLAYER
-        Resultats
-        array upper section / lower
-        afficher tableau
-        lancer dés
-        scores possibles
-        Menu scores possibles
-        tour
-        retour score total
-        GAME
-*/
