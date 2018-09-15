@@ -27,10 +27,10 @@ public class Main {
     
     private static void run_game(int nb_player)
     {
-        Player[] players = new Player[nb_player];
+        Computer[] players = new Computer[nb_player];
         for(int i = 0; i < players.length; i++)
         {
-            players[i] = new Player();
+            players[i] = new Computer();
         }
 
         boolean game_end = false;

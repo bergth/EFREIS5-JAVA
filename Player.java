@@ -137,7 +137,7 @@ public class Player
      * Fill 'dice_result' after the 3 rolls
      * 
      */
-    public void roll_dices()
+    protected void roll_dices()
     {
         int i, j;
         String KeepIt;//Condition to keep or not a Dice
@@ -189,7 +189,7 @@ public class Player
      * 
      */
     
-    public void find_upper_choices()
+    private void find_upper_choices()
     {
         for(int i = 0; i < dices_result.length; i++)
         {
@@ -331,7 +331,7 @@ public class Player
      * 
      * 
      */
-    private void ask_choice()
+    protected void ask_choice()
     {
         print_result();
         Scanner scan = new Scanner(System.in);
@@ -402,8 +402,10 @@ public class Player
         print_result();
         roll_dices();
         find_choice();
+        print_result();
         ask_choice();
         clean_arrays(); 
+        print_result();
     }
 
 
