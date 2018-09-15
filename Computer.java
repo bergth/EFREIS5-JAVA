@@ -81,7 +81,12 @@ public class Computer extends Player
             }
         }
 
-        System.out.println(lower+" "+id_max);
+        System.out.print("I chose:");
+        if(lower)
+            System.out.println(id_max+7);
+        else
+            System.out.println(id_max+1);
+
         if(!lower)
         {
             upper_section[id_max] = choice_possible_upper[id_max];
