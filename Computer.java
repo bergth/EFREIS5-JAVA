@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Computer extends Player
 {
-
-    protected void roll_dices()
+    int[] dices_result = {0,0,0,0,0};
+    protected int[] roll_dices()
     {
         boolean[] keep = {false,false,false,false,false};
         Random rand = new Random();
@@ -14,7 +14,7 @@ public class Computer extends Player
                 dices_result[i] = rand.nextInt(5 + 1) + 1;
             }
         }
-        print_dices();
+        print_dices(dices_result);
         keep = choose_dices();
         for(int i = 0; i < 5; i++)
         {
@@ -23,7 +23,7 @@ public class Computer extends Player
                 dices_result[i] = rand.nextInt(5 + 1) + 1;
             }
         }
-        print_dices();
+        print_dices(dices_result);
         keep = choose_dices();
         for(int i = 0; i < 5; i++)
         {
@@ -32,7 +32,8 @@ public class Computer extends Player
                 dices_result[i] = rand.nextInt(5 + 1) + 1;
             }
         }
-        print_dices();
+        print_dices(dices_result);
+        return dices_result;
     }
 
 
@@ -59,6 +60,9 @@ public class Computer extends Player
 
     protected void ask_choice()
     {
+        int[] choice_possible_upper = pscore.get_choice_upper();
+        int[] choice_possible_lower = pscore.get_choice_lower();
+
         int id_max = 0;
         int max = -2;
         boolean lower = false;
@@ -81,22 +85,17 @@ public class Computer extends Player
             }
         }
 
-        System.out.print("I chose:");
+        int val = -2;
         if(lower)
-            System.out.println(id_max+7);
-        else
-            System.out.println(id_max+1);
-
-        if(!lower)
         {
-            upper_section[id_max] = choice_possible_upper[id_max];
-            choice_possible_upper[id_max] = -1;
+            val = id_max + 7;
         }
         else
         {
-            lower_section[id_max] = choice_possible_lower[id_max];
-            choice_possible_lower[id_max] = -1;
+            val = id_max + 1;
         }
+        System.out.print("I chose: " + val);
+        pscore.set_choice(val);
     }
 
 }
