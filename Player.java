@@ -84,7 +84,6 @@ public class Player
      */
     protected void ask_choice()
     {
-        pscore.print_result();
         Scanner scan = new Scanner(System.in);
         int choix = -1;
         boolean choice_made = false;
@@ -102,10 +101,9 @@ public class Player
             if(choix >= 0 && choix <= 13)
             {
                 choice_made = true;
-
             }
         }while(!choice_made);
-        
+        pscore.set_choice(choix);
     }
 
  
@@ -121,7 +119,7 @@ public class Player
     public void round()
     {
         pscore.print_result();
-        roll_dices();
+        pscore.set_dices_result(roll_dices());
         pscore.find_choice();
         pscore.print_result();
         ask_choice();

@@ -94,7 +94,7 @@ public class Computer extends Player
         {
             val = id_max + 1;
         }
-        System.out.print("I chose: " + val);
+        System.out.println("I chose: " + val);
         pscore.set_choice(val);
     }
 

@@ -27,7 +27,7 @@ public class Score
         };
     
         // result of dices
-        int[] dices_result = {1,1,1,1,1};
+        int[] dices_result = {0,0,0,0,0};
     
         // bonuses 
         int each_bonus = 0;
@@ -44,7 +44,7 @@ public class Score
          * 
          */
 
-        public void get_dices_result(int[] val)
+        public void set_dices_result(int[] val)
         {
             dices_result = val;
         }
