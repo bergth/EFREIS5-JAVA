@@ -1,10 +1,16 @@
 import java.util.Random;
+import java.util.Arrays;
+
 
 public class Computer extends Player
 {
-    int[] dices_result = {0,0,0,0,0};
+
+
+
+
     protected int[] roll_dices()
     {
+        int[] dices_result = {0,0,0,0,0};
         boolean[] keep = {false,false,false,false,false};
         Random rand = new Random();
         for(int i = 0; i < 5; i++)
@@ -15,7 +21,7 @@ public class Computer extends Player
             }
         }
         print_dices(dices_result);
-        keep = choose_dices();
+        keep = choose_dices(dices_result);
         for(int i = 0; i < 5; i++)
         {
             if(!keep[i])
@@ -24,7 +30,7 @@ public class Computer extends Player
             }
         }
         print_dices(dices_result);
-        keep = choose_dices();
+        keep = choose_dices(dices_result);
         for(int i = 0; i < 5; i++)
         {
             if(!keep[i])
@@ -37,9 +43,10 @@ public class Computer extends Player
     }
 
 
-    private boolean[] choose_dices()
+    private boolean[] choose_dices(int[] dices_result)
     {
         Random rand = new Random();
+        Arrays.sort(dices_result);
         boolean[] keep = {false,false,false,false,false};
         for(int i = 0; i < 5; i++)
         {
@@ -57,6 +64,10 @@ public class Computer extends Player
         System.out.println("");
         return keep;
     }
+
+
+
+
 
     protected void ask_choice()
     {
