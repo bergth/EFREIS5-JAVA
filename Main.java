@@ -34,8 +34,10 @@ public class Main {
         }
 
         boolean game_end = false;
+        Scanner scan = new Scanner(System.in);
         while(!game_end)
         {
+
             for(int i = 0; i < players.length; i++)
             {
                 System.out.println("#####################################");
@@ -47,6 +49,7 @@ public class Main {
                 {
                     game_end = true;
                 }
+                scan.nextLine();
             }
         }
 

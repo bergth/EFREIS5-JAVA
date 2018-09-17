@@ -6,12 +6,15 @@ public class Computer extends Player
 {
 
 
-
+    int[] estim_upper = {0,0,0,0,0,0};
+    int[] estim_lower = {0,0,0,0,0,0,0};
+    int[] dices_result = {0,0,0,0,0};
+    boolean[][] keeps;
 
     protected int[] roll_dices()
     {
-        int[] dices_result = {0,0,0,0,0};
         boolean[] keep = {false,false,false,false,false};
+
         Random rand = new Random();
         for(int i = 0; i < 5; i++)
         {
@@ -26,6 +29,7 @@ public class Computer extends Player
         {
             if(!keep[i])
             {
+                System.out.println("nkeep: "+ (i+1));
                 dices_result[i] = rand.nextInt(5 + 1) + 1;
             }
         }
@@ -45,69 +49,38 @@ public class Computer extends Player
 
     private boolean[] choose_dices(int[] dices_result)
     {
-        Random rand = new Random();
-        Arrays.sort(dices_result);
         boolean[] keep = {false,false,false,false,false};
-        for(int i = 0; i < 5; i++)
-        {
-            if(rand.nextInt(2) == 1)
-            {
-                keep[i] = true;
-            }
-        }
+        
+        keep = strategie();
 
         System.out.print("I choose: ");
         for(int i = 0; i < 5; i++)
         {
-            System.out.print(i+" ");
+            if(keep[i] == true)
+                System.out.print((i+1)+" ");
         }
         System.out.println("");
         return keep;
     }
 
 
-
+    private boolean[] strategie()
+    {
+        boolean[] keep =  {false, false, false, false, false};
+        return keep;
+    }
 
 
     protected void ask_choice()
     {
-        int[] choice_possible_upper = pscore.get_choice_upper();
-        int[] choice_possible_lower = pscore.get_choice_lower();
-
-        int id_max = 0;
-        int max = -2;
-        boolean lower = false;
-        for(int i = 0; i < 6; i++)
-        {
-            if(choice_possible_upper[i] > max)
-            {
-                max = choice_possible_upper[i];
-                id_max = i;
-            }
-        }
-
-        for(int i = 0; i < 7; i++)
-        {
-            if(choice_possible_lower[i] > max)
-            {
-                lower = true;
-                max = choice_possible_lower[i];
-                id_max = i;
-            }
-        }
-
-        int val = -2;
-        if(lower)
-        {
-            val = id_max + 7;
-        }
-        else
-        {
-            val = id_max + 1;
-        }
-        System.out.println("I chose: " + val);
+        int val = find_max();
+        System.out.println("I chose: " + (val));
         pscore.set_choice(val);
     }
+
+
+
+
 
 }
 
