@@ -45,7 +45,7 @@ public class Computer extends Player
 
     private boolean[] choose_dices(int[] dices_result)
     {
-        Arrays.sort(dices_result);
+        //Arrays.sort(dices_result);
         boolean[] keep = {false,false,false,false,false};
         
         keep = strategie(dices_result);
@@ -204,7 +204,7 @@ public class Computer extends Player
             }
 
         }
-        return (int)(n*(nb_keep + 1)) + (63/6);
+        return (n*(nb_keep + 1)) * 2;
     }
 
 
