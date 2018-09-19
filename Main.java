@@ -34,7 +34,6 @@ public class Main {
         }
 
         boolean game_end = false;
-        Scanner scan = new Scanner(System.in);
         while(!game_end)
         {
 
@@ -49,7 +48,6 @@ public class Main {
                 {
                     game_end = true;
                 }
-                scan.nextLine();
             }
         }
 
