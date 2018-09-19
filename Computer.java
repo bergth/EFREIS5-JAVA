@@ -209,10 +209,6 @@ public class Computer extends Player
             }
 
         }
-        if(nb_keep >= 2)
-        {
-            return (n*(nb_keep + 1)) + 100;
-        }
         return (n*(nb_keep + 1));
     }
 
@@ -250,6 +246,44 @@ public class Computer extends Player
         return arr;
     }
 
+    int[] find_max_serie(int[] dices)
+    {
+        int[] copy_dices = {0,0,0,0,0};
+        for(int i = 0; i < 5; i++)
+        {
+            copy_dices[i] = dices[i];
+        }
+        Arrays.sort(copy_dices);
+
+        int begin_serie_max = 0;
+        int size_serie_max = 1;
+        int begin_tmp = 0;
+        int size_tmp = 1;
+
+        for(int i = 1; i < 5; i++)
+        {
+            if(copy_dices[i] == (copy_dices[i - 1] + 1))
+            {
+                size_tmp ++;
+            }
+            else
+            {
+                if(size_tmp > size_serie_max)
+                {
+                    begin_serie_max = begin_tmp;
+                    size_serie_max = size_tmp;
+                }
+                size_tmp = i;
+                begin_tmp = 1;
+            }
+        }
+        int[] res = new int[size_serie_max];
+        for(int i = 0; i <  size_serie_max; i++)
+        {
+            res[i] = copy_dices[begin_serie_max + i];
+        }
+        return res;
+    }
 
     int of_king(int[] dices, boolean[] keep)
     {
@@ -295,12 +329,39 @@ public class Computer extends Player
 
     int sm_straight(int[] dices, boolean[] keep)
     {
-        return 0;
+        int dices_serie[] = find_max_serie(dices);
+        if(dices_serie.length >= 3)
+        {
+            for(int i = 0; i < 5; i++)
+            {
+                for(int j = 0; j < dices_serie.length; j++)
+                {
+                    if(dices[i] == dices_serie[j])
+                    {
+                        keep[i] = true;
+                    }
+                }
+            }
+            return 30;
+        }
+        return 30 / (6 - dices_serie.length);
     }
 
     int lg_straight(int[] dices, boolean[] keep)
     {
-        return 0;
+        int dices_serie[] = find_max_serie(dices);
+
+        for(int i = 0; i < 5; i++)
+        {
+            for(int j = 0; j < dices_serie.length; j++)
+            {
+                if(dices[i] == dices_serie[j])
+                {
+                    keep[i] = true;
+                }
+            }
+        }
+        return 40 / (6 - dices_serie.length);
     }
 
     int yahtzee(int[] dices, boolean[] keep)
