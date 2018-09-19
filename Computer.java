@@ -71,7 +71,12 @@ public class Computer extends Player
         boolean lower = false;
         for(int i = 0; i < 6; i++)
         {
-            if(choice_possible_upper[i] > max)
+            if(choice_possible_upper[i] >= 2* (i+1))
+            {
+                max = choice_possible_upper[i] + 1000;
+                id_max = i;
+            }
+            else if(choice_possible_upper[i] > max)
             {
                 max = choice_possible_upper[i];
                 id_max = i;
@@ -204,7 +209,11 @@ public class Computer extends Player
             }
 
         }
-        return (n*(nb_keep + 1)) * 2;
+        if(nb_keep >= 2)
+        {
+            return (n*(nb_keep + 1)) + 100;
+        }
+        return (n*(nb_keep + 1));
     }
 
 

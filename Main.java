@@ -25,12 +25,16 @@ public class Main {
 
 
     
-    private static void run_game(int nb_player)
+    private static void run_game(int nb_players, int nb_robots)
     {
-        Player[] players = new Player[nb_player];
-        for(int i = 0; i < players.length; i++)
+        Player[] players = new Player[nb_players + nb_robots];
+        for(int i = 0; i < nb_players; i++)
         {
-            players[i] = new Computer();
+            players[i] = new Player();
+        }
+        for(int i = 0; i < nb_robots; i++)
+        {
+            players[nb_players + i] = new Computer();
         }
 
         boolean game_end = false;
@@ -73,21 +77,47 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello ! Yahtzee !");
         print_logo();
-        int nb_players = 0;
+        int nb_players = -1;
+        int nb_robots = -1;
+        boolean input_ok = false;
         Scanner scan = new Scanner(System.in);
-        while(nb_players <= 0)
+        while(!input_ok)
         {
-            System.out.println("Choose number of players (1 to n):");
-            try
+            while(nb_players < 0)
             {
-                nb_players = scan.nextInt();
-            }catch(Exception e)
+                System.out.println("Choose number of players:");
+                try
+                {
+                    nb_players = scan.nextInt();
+                }catch(Exception e)
+                {
+                    nb_players = -1;
+                    scan.nextLine();
+                }
+            }
+
+            while(nb_robots < 0)
             {
-                nb_players = 0;
-                scan.nextLine();
+                System.out.println("Choose number of robots:");
+                try
+                {
+                    nb_robots = scan.nextInt();
+                }catch(Exception e)
+                {
+                    nb_robots = -1;
+                    scan.nextLine();
+                }
+            }
+            if(nb_players == 0 && nb_robots == 0)
+            {
+                System.out.println("Please select at least one robot or player\n");
+            }
+            else
+            {
+                input_ok = true;
             }
         }
-        run_game(nb_players);
+        run_game(nb_players,nb_robots);
         System.out.println("Bye ! Yahtzee !");
     }
 }
