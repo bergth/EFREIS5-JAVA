@@ -71,7 +71,7 @@ public class Computer extends Player
         boolean lower = false;
         for(int i = 0; i < 6; i++)
         {
-            if(choice_possible_upper[i] >= 2* (i+1))
+            if(choice_possible_upper[i] >= 3 * (i+1))
             {
                 max = choice_possible_upper[i] + 1000;
                 id_max = i;
@@ -114,6 +114,8 @@ public class Computer extends Player
         pscore.set_choice(val);
     }
 
+
+    // 
     private boolean[] strategie(int[] dices)
     {
         int[] choice_possible_upper = pscore.get_choice_upper();
@@ -132,6 +134,15 @@ public class Computer extends Player
 
         int max = 0;
         int id_max = 0;
+
+        // 0 - 5  upper
+        // 6 of kind
+        // 7 full_house
+        // 8 sm straight
+        // 9 lg straight
+        // 10 yathzee
+
+
         for(int i = 1; i <= 6; i++)
         {
             if(choice_possible_upper[i - 1] != -1)
@@ -140,7 +151,7 @@ public class Computer extends Player
                 if(tmp > max)
                 {
                     max = tmp;
-                    id_max = i;
+                    id_max = i - 1;
                 }
             }
         }
@@ -192,13 +203,13 @@ public class Computer extends Player
                 id_max = 10;
             }
         }
-
+        
+        System.out.println("Strategie: " + id_max);
         return keeps[id_max];
     }
 
     int keep_upper(int[] dices, int n, boolean[] keep)
     {
-        keep = new boolean[5];
         int nb_keep = 0;
         for(int i = 0; i < 5; i++)
         {
@@ -288,25 +299,25 @@ public class Computer extends Player
     int of_king(int[] dices, boolean[] keep)
     {
         int[] maxs = find_max_dices(dices);
-        int max = maxs[1];
+        int nb_max = maxs[1];
         int index_max = maxs[0];
-        if(max >= 2)
+        if(nb_max >= 2)
         {
             int sum = 0;
-            int min = 7;
+            int max = 0;
             for(int i = 0; i < 5; i++)
             {
                 sum += dices[i];
-                if(dices[i] < min)
+                if(dices[i] > max)
                 {
-                    min = dices[i];
+                    max = dices[i];
                 }
                 if(dices[i] == index_max)
                 {
                     keep[i] = true;
                 }
             }
-            return sum - min + (index_max);
+            return sum - max + (index_max);
         }
         else
         {
@@ -330,34 +341,35 @@ public class Computer extends Player
     int sm_straight(int[] dices, boolean[] keep)
     {
         int dices_serie[] = find_max_serie(dices);
-        if(dices_serie.length >= 3)
+
+        for(int i = 0; i < dices_serie.length; i++)
         {
-            for(int i = 0; i < 5; i++)
+            for(int j = 0; j < 5; j++)
             {
-                for(int j = 0; j < dices_serie.length; j++)
+                if(dices[j] == dices_serie[i])
                 {
-                    if(dices[i] == dices_serie[j])
-                    {
-                        keep[i] = true;
-                    }
+                    keep[j] = true;
+                    break;
                 }
             }
-            return 30;
         }
-        return 30 / (6 - dices_serie.length);
+        if(5 - dices_serie.length == 0)
+            return 30;
+        return 30 / (5 - dices_serie.length);
     }
 
     int lg_straight(int[] dices, boolean[] keep)
     {
         int dices_serie[] = find_max_serie(dices);
 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < dices_serie.length; i++)
         {
-            for(int j = 0; j < dices_serie.length; j++)
+            for(int j = 0; j < 5; j++)
             {
-                if(dices[i] == dices_serie[j])
+                if(dices[j] == dices_serie[i])
                 {
-                    keep[i] = true;
+                    keep[j] = true;
+                    break;
                 }
             }
         }

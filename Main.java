@@ -59,9 +59,11 @@ public class Main {
         System.out.println("Result:");
         int max = 0;
         int id_max = 0;
+        float sum = 0;
         for(int i = 0; i < players.length; i++)
         {
             int result = players[i].get_result();
+            sum += result;
             System.out.printf("Player %2d: %d\n",i + 1,result);
             if(result > max)
             {
@@ -69,8 +71,8 @@ public class Main {
                 id_max = i;
             }
         }
-
         System.out.println("\nPlayer " + (id_max+1) + " win !");
+        System.out.println("Moy: " + (sum / players.length));
     }
 
 

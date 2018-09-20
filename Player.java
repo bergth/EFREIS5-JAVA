@@ -118,6 +118,8 @@ public class Player
 
     public void round()
     {
+       // Scanner s = new Scanner(System.in);
+       // s.nextLine();
         pscore.print_result();
         pscore.set_dices_result(roll_dices());
         pscore.find_choice();
